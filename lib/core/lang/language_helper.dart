@@ -13,7 +13,17 @@ class LanguageHelper {
   static Future<Locale> getSavedLocale() async {
     final prefs = await SharedPreferences.getInstance();
     final code = prefs.getString(_languageKey) ?? 'vi';
-    return Locale(code);
+    return localeForCode(code);
+  }
+
+  static Locale localeForCode(String code) {
+    switch (code) {
+      case 'en':
+        return const Locale('en', 'US');
+      case 'vi':
+      default:
+        return const Locale('vi', 'VN');
+    }
   }
 
   static Future<String> getSavedLanguageCode() async {

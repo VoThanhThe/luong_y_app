@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_colors.dart' show AppColors;
 import '../../core/constants/app_gradients.dart';
+import '../../shared/widgets/mlkit_text.dart';
+import '../../core/constants/app_images.dart';
+import '../../shared/widgets/f_core_image.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,8 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 2; // Chọn mặc định tab "Trang chủ" ở giữa
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 50),
+              const SizedBox(height: 40),
               // 1. Header: Avatar + Lời chào
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 child: Row(
                   children: [
@@ -42,13 +44,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Icon(Icons.person, color: Colors.white, size: 28),
                     ),
                     SizedBox(width: 12),
-                    Text(
-                      'Chào buổi sáng',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Column(
+                      children: [
+                        MlKitText(
+                          'Chào buổi sáng',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        MlKitText(
+                          'Võ Thành Thế'.toUpperCase(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -110,20 +124,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        MlKitText(
                           'Mạng lưới',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF1E5B6E),
+                            color: AppColors.primaryDarkColor,
                           ),
                         ),
                         TextButton(
                           onPressed: () {},
-                          child: const Text(
+                          child: MlKitText(
                             'Xem thêm',
                             style: TextStyle(
-                              color: Color(0xFF1E5B6E),
+                              color: AppColors.primaryDarkColor,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -147,20 +161,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        MlKitText(
                           'Tin tức & Truyền thông',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF1E5B6E),
+                            color: AppColors.primaryDarkColor,
                           ),
                         ),
                         TextButton(
                           onPressed: () {},
-                          child: const Text(
+                          child: MlKitText(
                             'Xem thêm',
                             style: TextStyle(
-                              color: Color(0xFF1E5B6E),
+                              color: AppColors.primaryDarkColor,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -188,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    MlKitText(
                       'Kết nối với chúng tôi',
                       style: TextStyle(
                         fontSize: 20,
@@ -205,10 +219,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisSpacing: 8,
                       crossAxisSpacing: 8,
                       children: [
-                        _buildSocialMediaItem(Icons.facebook, 'Facebook'),
-                        _buildSocialMediaItem(Icons.messenger, 'Messenger'),
-                        _buildSocialMediaItem(Icons.messenger, 'Zalo'),
-                        _buildSocialMediaItem(Icons.tiktok, 'Tiktok'),
+                        _buildSocialMediaItem(
+                          AppImages.logoFacebook,
+                          'Facebook',
+                        ),
+                        _buildSocialMediaItem(
+                          AppImages.logoMessenger,
+                          'Messenger',
+                        ),
+                        _buildSocialMediaItem(AppImages.logoZalo, 'Zalo'),
+                        _buildSocialMediaItem(AppImages.logoTiktok, 'Tiktok'),
                       ],
                     ),
                   ],
@@ -243,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
             border: Border.all(color: AppColors.whiteColor, width: 1),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -252,7 +272,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Icon(icon, color: Colors.white, size: 28),
         ),
         const SizedBox(height: 6),
-        Text(
+        MlKitText(
           title,
           textAlign: TextAlign.center,
           maxLines: 2,
@@ -268,24 +288,28 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Widget hiển thị từng nút dịch vụ social media
-  Widget _buildSocialMediaItem(IconData icon, String title) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: Colors.white, size: 48),
-        const SizedBox(height: 6),
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          maxLines: 2,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 11.5,
-            height: 1.2,
-            fontWeight: FontWeight.w500,
+  Widget _buildSocialMediaItem(String image, String title) {
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {},
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FCoreImage(image, width: 48, height: 48),
+          const SizedBox(height: 6),
+          MlKitText(
+            title,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 11.5,
+              height: 1.2,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -310,7 +334,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                MlKitText(
                   'Đặt lịch kiểm tra\nsức khỏe',
                   style: TextStyle(
                     color: Colors.white,
@@ -333,7 +357,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       vertical: 8,
                     ),
                   ),
-                  child: const Text(
+                  child: MlKitText(
                     'ĐẶT HẸN KHÁM',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
                   ),
@@ -375,7 +399,7 @@ class _HomeScreenState extends State<HomeScreen> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -397,11 +421,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const SizedBox(width: 12),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                MlKitText(
                   'Bệnh viện Hoàn Mỹ Sài Gòn',
                   style: TextStyle(
                     fontSize: 15,
@@ -416,7 +440,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Icon(Icons.location_on, size: 16, color: Colors.grey),
                     SizedBox(width: 4),
                     Expanded(
-                      child: Text(
+                      child: MlKitText(
                         '60-60A Phan Xích Long, Phường Cầu Kiệu, Hồ Chí Minh.',
                         style: TextStyle(fontSize: 12, color: Colors.grey),
                       ),
@@ -428,7 +452,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Icon(Icons.phone, size: 16, color: Colors.grey),
                     SizedBox(width: 4),
-                    Text(
+                    MlKitText(
                       '028 3990 2468',
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
@@ -469,7 +493,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                MlKitText(
                   'Cộng đồng',
                   style: TextStyle(
                     fontSize: 12,
@@ -478,7 +502,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(
+                MlKitText(
                   'Bụng to bất thường do nhiều khối u lớn trong ổ bụng',
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
@@ -499,7 +523,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(width: 4),
                     Expanded(
-                      child: Text(
+                      child: MlKitText(
                         '21/10/2025',
                         style: TextStyle(
                           fontSize: 12,

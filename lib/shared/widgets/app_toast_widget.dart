@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/utils/toast_enums.dart';
+import 'mlkit_text.dart';
 
 class AppToastWidget extends StatefulWidget {
   final ToastStatus status;
@@ -31,10 +32,7 @@ class _AppToastWidgetState extends State<AppToastWidget>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget.duration,
-    );
+    _controller = AnimationController(vsync: this, duration: widget.duration);
 
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
@@ -43,15 +41,13 @@ class _AppToastWidgetState extends State<AppToastWidget>
       ),
     );
 
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, -0.5),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.0, 0.15, curve: Curves.easeOut),
-      ),
-    );
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, -0.5), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: const Interval(0.0, 0.15, curve: Curves.easeOut),
+          ),
+        );
 
     // Chạy animation và tự ẩn khi hết thời gian
     _controller.forward();
@@ -78,7 +74,7 @@ class _AppToastWidgetState extends State<AppToastWidget>
         child: Dismissible(
           key: UniqueKey(),
           // Cho phép vuốt hất lên trên HOẶC vuốt sang 2 bên để tắt
-          direction: DismissDirection.up, 
+          direction: DismissDirection.up,
           // Cho phép nhận diện thao tác vuốt tốt hơn trên toàn bộ khung Toast
           behavior: HitTestBehavior.opaque,
           onDismissed: (direction) {
@@ -120,7 +116,7 @@ class _AppToastWidgetState extends State<AppToastWidget>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(
+                                MlKitText(
                                   widget.title,
                                   style: const TextStyle(
                                     color: Colors.white,
@@ -131,10 +127,12 @@ class _AppToastWidgetState extends State<AppToastWidget>
                                 if (widget.subtitle != null &&
                                     widget.subtitle!.isNotEmpty) ...[
                                   const SizedBox(height: 2),
-                                  Text(
+                                  MlKitText(
                                     widget.subtitle!,
                                     style: TextStyle(
-                                      color: Colors.white.withAlpha((0.9 * 255).toInt()),
+                                      color: Colors.white.withAlpha(
+                                        (0.9 * 255).toInt(),
+                                      ),
                                       fontSize: 13,
                                     ),
                                   ),
@@ -150,7 +148,9 @@ class _AppToastWidgetState extends State<AppToastWidget>
                       builder: (context, child) {
                         return LinearProgressIndicator(
                           value: 1.0 - _controller.value,
-                          backgroundColor: Colors.white.withAlpha((0.2 * 255).toInt()),
+                          backgroundColor: Colors.white.withAlpha(
+                            (0.2 * 255).toInt(),
+                          ),
                           valueColor: const AlwaysStoppedAnimation<Color>(
                             Colors.white,
                           ),

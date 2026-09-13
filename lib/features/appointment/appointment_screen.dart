@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../shared/widgets/app_scaffold.dart';
+import '../../shared/widgets/mlkit_text.dart';
 
 class AppointmentScreen extends StatefulWidget {
   const AppointmentScreen({super.key});
@@ -22,9 +23,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
           // Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateAppointmentScreen()));
         },
       ),
-      body: const Center(
-        child: Text('Màn hình Lịch hẹn'),
-      ),
+      body: const Center(child: MlKitText('Màn hình Lịch hẹn')),
     );
   }
 }

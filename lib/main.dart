@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:luong_y_app/features/home/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/constants/app_colors.dart';
+import 'core/lang/app_language.dart';
 import 'core/lang/language_helper.dart';
 import 'features/navigation/main_navigation.dart';
 import 'features/onboarding/onboarding_screen.dart';
@@ -19,7 +19,8 @@ void main() async {
   }
 
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  await AppLanguage.initialize();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -39,8 +40,9 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             textTheme: const TextTheme(bodyMedium: TextStyle(fontSize: 16)),
             textSelectionTheme: TextSelectionThemeData(
-              selectionColor:
-                  AppColors.primaryColor.withOpacity(0.5), // Màu nền khi chọn văn bản
+              selectionColor: AppColors.primaryColor.withValues(
+                alpha: 0.5,
+              ), // Màu nền khi chọn văn bản
               cursorColor: AppColors.primaryColor,
             ),
           ),
@@ -49,27 +51,21 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          // locale: initialLocale,
-          // translations: TranslationService(),
-          fallbackLocale: const Locale('vi'),
-          supportedLocales: const [
-            Locale('vi'),
-            Locale('en'),
-            Locale('zh'),
-          ],
+          supportedLocales: const [Locale('vi'), Locale('en'), Locale('zh')],
           home: FutureBuilder<bool>(
             future: LanguageHelper.isOnboardingCompleted(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Scaffold(
-                    body: Center(child: CircularProgressIndicator()));
+                  body: Center(child: CircularProgressIndicator()),
+                );
               }
 
               bool isCompleted = snapshot.data ?? false;
 
               // return const TestAdsScreen();
 
-              if (isCompleted) {
+              if (!isCompleted) {
                 return const MainNavigation();
               } else {
                 return const OnboardingScreen();

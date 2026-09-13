@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_gradients.dart';
 import '../../core/constants/app_images.dart';
+import '../../shared/widgets/mlkit_text.dart';
 import '../navigation/main_navigation.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -40,7 +41,7 @@ class OnboardingScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text(
+                      MlKitText(
                         'Chăm sóc sức khoẻ\ntrong tầm tay.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -50,9 +51,9 @@ class OnboardingScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      const Text(
+                      MlKitText(
                         'Kết nối chăm sóc sức khoẻ\nmọi lúc, mọi nơi.',
-                        textAlign: TextAlign.center, 
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
@@ -71,7 +72,7 @@ class OnboardingScreen extends StatelessWidget {
                             ),
                           );
                         },
-                        child: Text(
+                        child: MlKitText(
                           'Bắt đầu',
                           style: TextStyle(
                             color: AppColors.primaryColor,
