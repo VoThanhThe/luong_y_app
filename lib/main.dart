@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:luong_y_app/features/auth/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -67,7 +66,6 @@ class MyApp extends StatelessWidget {
               // return const TestAdsScreen();
 
               if (!isCompleted) {
-                return const LoginScreen();
                 return const MainNavigation();
               } else {
                 return const OnboardingScreen();
