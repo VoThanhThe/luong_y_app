@@ -87,8 +87,7 @@ class _MyAppState extends State<MyApp> {
 
               // Đảo lại logic cho đúng: Chưa xong hiện Onboarding, xong rồi vào MainNavigation
               if (!isCompleted) {
-                return const MainNavigation();
-                // return const OnboardingScreen();
+                return const OnboardingScreen();
               } else {
                 return const MainNavigation();
               }
