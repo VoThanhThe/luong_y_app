@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:luong_y_app/features/auth/change_password_screen.dart';
 
 import '../../core/constants/app_colors.dart';
 import '../../core/lang/app_language.dart';
@@ -86,7 +87,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              MlKitText(
                                 'Võ Thành Thế'.toUpperCase(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -96,7 +97,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                                   color: AppColors.blackColor,
                                 ),
                               ),
-                              Text(
+                              MlKitText(
                                 '0384234234'.toUpperCase(),
                                 style: TextStyle(
                                   fontSize: 14,
@@ -218,6 +219,12 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                   titleWidget: _menuText('Đăng nhập và bảo mật'),
                   onTap: () {
                     // Xử lý đổi ngôn ngữ
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChangePasswordScreen(),
+                      ),
+                    );
                   },
                 ),
                 CustomListTile(
@@ -248,7 +255,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            MlKitText(
                               'Chia sẽ với mình trải nghiệm của bạn nhé',
                               style: TextStyle(
                                 fontSize: 14,
@@ -256,7 +263,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                                 color: AppColors.blackColor,
                               ),
                             ),
-                            Text(
+                            MlKitText(
                               'Giúp mình chọn bệnh viện để lắng nghe ý kiến từ bạn',
                               style: TextStyle(
                                 fontSize: 12,
@@ -276,7 +283,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                                       context: context,
                                       title:
                                           'Bạn có hài lòng về dịch vụ của Bệnh viện Hoàn Mỹ Sài Gòn?',
-                                      child: Text(
+                                      child: MlKitText(
                                         'Đánh giá của bạn giúp chúng tôi cải thiện dịch vụ tốt hơn',
                                         style: TextStyle(
                                           fontSize: 14,
@@ -398,7 +405,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                                       ),
                                       borderRadius: BorderRadius.circular(12),
                                     ),
-                                    child: Text(
+                                    child: MlKitText(
                                       'Bệnh viện Hoàn Mỹ Sài Gòn',
                                       style: TextStyle(
                                         fontSize: 14,

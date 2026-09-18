@@ -50,7 +50,7 @@ class CustomListTile extends StatelessWidget {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Chỉ hiển thị Text ở trailing nếu có truyền vào (như mục ngôn ngữ)
+                // Chỉ hiển thị MlKitText ở trailing nếu có truyền vào (như mục ngôn ngữ)
                 if (trailingText != null) ...[
                   MlKitText(
                     trailingText!,
