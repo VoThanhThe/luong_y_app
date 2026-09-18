@@ -49,6 +49,7 @@ dependencies:
   # 0.15.x requires Dart 3.12; Flutter in this project ships Dart 3.10.4.
   google_mlkit_translation: ^0.14.0
   url_launcher: ^6.3.2
+  flutter_native_splash: ^2.4.8
 
 dev_dependencies:
   flutter_test:
@@ -109,3 +110,20 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/logo_splash.png
+  branding: null
+  color_dark: "#121212"
+  image_dark: assets/images/logo_splash.png
+  branding_dark: null
+
+  android_12:
+    image: assets/images/logo_splash.png
+    icon_background_color: "#ffffff"
+    image_dark: assets/images/logo_splash.png
+    icon_background_color_dark: "#121212"
+
+  web: false

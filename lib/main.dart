@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,19 +19,39 @@ void main() async {
     Logger.level = Level.debug;
   }
 
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   await AppLanguage.initialize();
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    _removeSplash();
+  }
+
+  // Gỡ bỏ native splash sau khi app đã chuẩn bị xong frame đầu tiên
+  void _removeSplash() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FlutterNativeSplash.remove();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
       future: _getLoginStatus(),
-      builder: (context, snapshot) {
+      builder: (context, loginSnapshot) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Lương Y',
@@ -42,7 +63,7 @@ class MyApp extends StatelessWidget {
             textSelectionTheme: TextSelectionThemeData(
               selectionColor: AppColors.primaryColor.withValues(
                 alpha: 0.5,
-              ), // Màu nền khi chọn văn bản
+              ),
               cursorColor: AppColors.primaryColor,
             ),
           ),
@@ -54,21 +75,22 @@ class MyApp extends StatelessWidget {
           supportedLocales: const [Locale('vi'), Locale('en'), Locale('zh')],
           home: FutureBuilder<bool>(
             future: LanguageHelper.isOnboardingCompleted(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
+            builder: (context, onboardingSnapshot) {
+              if (onboardingSnapshot.connectionState == ConnectionState.waiting) {
+                // Trong lúc chờ check dữ liệu, để màn hình trống trùng màu background
                 return const Scaffold(
-                  body: Center(child: CircularProgressIndicator()),
+                  body: SizedBox.shrink(),
                 );
               }
 
-              bool isCompleted = snapshot.data ?? false;
+              bool isCompleted = onboardingSnapshot.data ?? false;
 
-              // return const TestAdsScreen();
-
+              // Đảo lại logic cho đúng: Chưa xong hiện Onboarding, xong rồi vào MainNavigation
               if (!isCompleted) {
                 return const MainNavigation();
+                // return const OnboardingScreen();
               } else {
-                return const OnboardingScreen();
+                return const MainNavigation();
               }
             },
           ),
