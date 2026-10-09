@@ -4,7 +4,7 @@ import '../../core/constants/app_images.dart';
 import '../../core/utils/app_utils.dart';
 import '../../shared/widgets/app_scaffold.dart';
 import '../../shared/widgets/f_core_image.dart'; // Sử dụng AppScaffold chuẩn của bạn
-import '../../shared/widgets/mlkit_text.dart';
+import '../../shared/widgets/app_text.dart';
 
 class AppInfoScreen extends StatelessWidget {
   const AppInfoScreen({super.key});
@@ -55,16 +55,14 @@ class AppInfoScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    MlKitText(
-                      'Version: 1.0',
+                    AppText('app_version',
                       style: TextStyle(
                         fontSize: 14,
                         color: AppColors.blackColor,
                       ),
                     ),
                     SizedBox(height: 6),
-                    MlKitText(
-                      'Build: 1',
+                    AppText('build_number',
                       style: TextStyle(
                         fontSize: 14,
                         color: AppColors.grayColor,
@@ -84,16 +82,14 @@ class AppInfoScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MlKitText(
-                          'Ứng dụng ',
+                        AppText('app_text_136',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: AppColors.blackColor,
                           ),
                         ),
-                        MlKitText(
-                          'Lương Y',
+                        AppText('app_name',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -103,8 +99,7 @@ class AppInfoScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 4),
-                    MlKitText(
-                      'Ứng dụng chăm sóc sức khỏe\ndành cho gia đình bạn',
+                    AppText('app_text_137',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 12,
@@ -133,7 +128,7 @@ class AppInfoScreen extends StatelessWidget {
   Widget _buildSectionHeader(String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0, left: 4.0),
-      child: MlKitText(
+      child: AppText(
         title,
         style: TextStyle(
           fontSize: 15,
@@ -174,7 +169,7 @@ class AppInfoScreen extends StatelessWidget {
         child: ListTile(
           // Không để onTap ở đây nữa để tránh xung đột hiệu ứng splash của Material/InkWell
           leading: Icon(icon, color: AppColors.primaryColor),
-          title: MlKitText(
+          title: AppText(
             text,
             style: TextStyle(fontSize: 14, color: AppColors.blackColor),
           ),
@@ -188,7 +183,7 @@ class AppInfoScreen extends StatelessWidget {
       color: Colors
           .white, // Đổi từ transparent sang white để hết warning và hiển thị ink splash đẹp hơn
       child: ListTile(
-        title: MlKitText(
+        title: AppText(
           title,
           style: TextStyle(fontSize: 14, color: AppColors.blackColor),
         ),

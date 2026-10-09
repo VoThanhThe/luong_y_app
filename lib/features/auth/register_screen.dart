@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../shared/widgets/app_scaffold.dart';
 import '../../shared/widgets/custom_text_field.dart';
-import '../../shared/widgets/mlkit_text.dart';
+import '../../shared/widgets/app_text.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -72,8 +72,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                MlKitText(
-                  'Đăng ký tài khoản sẽ giúp quý khách sử dụng được đầy đủ các tính năng của bệnh viện Hoàn Mỹ\nThông tin cá nhân của quý khách được bảo mật',
+                AppText('app_text_030',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 14, color: AppColors.grayColor),
                 ),
@@ -167,8 +166,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const MlKitText(
-                        'Yêu cầu độ mạnh mật khẩu:',
+                      const AppText('app_text_165',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -211,7 +209,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             // Xử lý khi bấm vào Điều khoản
-                            print('Đã bấm Điều khoản');
+                            debugPrint('Đã bấm Điều khoản');
                           },
                         text: 'Điều khoản, Điều kiện',
                         style: TextStyle(color: AppColors.blackColor, decoration: TextDecoration.underline,),
@@ -224,7 +222,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             // Xử lý khi bấm vào Điều khoản
-                            print('Đã bấm Điều khoản');
+                            debugPrint('Đã bấm Điều khoản');
                           },
                         text: 'Chính sách bảo mật',
                         style: TextStyle(color: AppColors.blackColor, decoration: TextDecoration.underline,),
@@ -259,8 +257,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                           }
                         : null,
-                    child: const MlKitText(
-                      'ĐĂNG KÝ',
+                    child: const AppText('sign_up',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -288,7 +285,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             color: isMet ? AppColors.primaryColor : Colors.grey,
           ),
           const SizedBox(width: 8),
-          MlKitText(
+          AppText(
             text,
             style: TextStyle(
               fontSize: 12,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_colors.dart';
-import '../../../shared/widgets/mlkit_text.dart';
+import '../../../shared/widgets/app_text.dart';
 
 class CustomListTile extends StatelessWidget {
   final IconData leadingIcon;
@@ -41,7 +41,7 @@ class CustomListTile extends StatelessWidget {
         ),
         title:
             titleWidget ??
-            MlKitText(
+            AppText(
               title,
               style: TextStyle(fontSize: 14, color: AppColors.blackColor),
             ),
@@ -50,9 +50,9 @@ class CustomListTile extends StatelessWidget {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Chỉ hiển thị MlKitText ở trailing nếu có truyền vào (như mục ngôn ngữ)
+                // Chỉ hiển thị AppText ở trailing nếu có truyền vào (như mục ngôn ngữ)
                 if (trailingText != null) ...[
-                  MlKitText(
+                  AppText(
                     trailingText!,
                     style: TextStyle(fontSize: 14, color: AppColors.blackColor),
                   ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'mlkit_text.dart';
+import 'app_text.dart';
 
 class AppModal {
   static Future<T?> showNormallyModal<T>({
@@ -99,7 +99,7 @@ class AppModal {
                 const SizedBox(height: 16),
                 // Tiêu đề
                 titleWidget ??
-                    MlKitText(
+                    AppText(
                       title,
                       style: const TextStyle(
                         fontSize: 18,
@@ -125,7 +125,7 @@ class AppModal {
                     onPressed: onConfirm,
                     child:
                         confirmWidget ??
-                        MlKitText(
+                        AppText(
                           confirmText,
                           style: const TextStyle(
                             fontSize: 16,

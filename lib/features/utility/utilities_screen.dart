@@ -5,13 +5,12 @@ import 'package:luong_y_app/features/auth/change_password_screen.dart';
 
 import '../../core/constants/app_colors.dart';
 import '../../core/lang/app_language.dart';
-import '../../core/lang/on_device_translation_service.dart';
 import '../../core/utils/toast_enums.dart';
 import '../../core/utils/toast_utils.dart';
 import '../../shared/widgets/app_popup.dart';
 import '../../shared/widgets/app_scaffold.dart';
 import '../../shared/widgets/app_modal.dart';
-import '../../shared/widgets/mlkit_text.dart';
+import '../../shared/widgets/app_text.dart';
 import 'app_info_screen.dart';
 import 'f_a_q_screen.dart';
 import 'widgets/custom_list_tile.dart';
@@ -39,9 +38,6 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
   }
 
   Future<void> _changeLanguage(String languageCode) async {
-    if (languageCode == 'en') {
-      await OnDeviceTranslationService.prepareVietnameseEnglishModels();
-    }
     await AppLanguage.change(languageCode);
     if (mounted) {
       setState(() => _languageCode = languageCode);
@@ -52,8 +48,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
   Widget build(BuildContext context) {
     return AppScaffold(
       title: 'Tiện ích',
-      titleWidget: MlKitText(
-        'Tiện ích',
+      titleWidget: AppText('utilities',
         languageCode: _languageCode,
         style: const TextStyle(
           color: Colors.white,
@@ -87,8 +82,8 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              MlKitText(
-                                'Võ Thành Thế'.toUpperCase(),
+                              AppText('profile_name',
+                                uppercase: true,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -97,8 +92,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                                   color: AppColors.blackColor,
                                 ),
                               ),
-                              MlKitText(
-                                '0384234234'.toUpperCase(),
+                              AppText('0384234234'.toUpperCase(),
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -113,8 +107,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                   ],
                 ),
                 const SizedBox(height: 12),
-                MlKitText(
-                  'Tiện ích',
+                AppText('utilities',
                   languageCode: _languageCode,
                   style: TextStyle(
                     fontSize: 16,
@@ -136,7 +129,11 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                   title: 'Ngôn ngữ',
                   titleWidget: _menuText('Ngôn ngữ'),
                   trailingWidget: _menuText(
-                    _languageCode == 'en' ? 'Tiếng Anh' : 'Tiếng Việt',
+                    _languageCode == 'en'
+                        ? 'english'
+                        : _languageCode == 'zh'
+                        ? 'chinese'
+                        : 'vietnamese',
                   ),
                   onTap: () {
                     String selectedLanguage = _languageCode;
@@ -144,8 +141,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                     AppModal.showSelectionModal(
                       context: context,
                       title: 'Chọn ngôn ngữ',
-                      titleWidget: MlKitText(
-                        'Chọn ngôn ngữ',
+                      titleWidget: AppText('choose_language',
                         languageCode: _languageCode,
                         style: const TextStyle(
                           fontSize: 18,
@@ -154,8 +150,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                         ),
                       ),
                       confirmText: 'XÁC NHẬN',
-                      confirmWidget: MlKitText(
-                        'XÁC NHẬN',
+                      confirmWidget: AppText('confirm_2',
                         languageCode: _languageCode,
                         style: const TextStyle(
                           fontSize: 16,
@@ -169,7 +164,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                             return Column(
                               children: [
                                 _buildLanguageOptionItem(
-                                  title: 'Tiếng Việt',
+                                  title: 'vietnamese',
                                   isSelected: selectedLanguage == 'vi',
                                   onTap: () {
                                     setModalState(() {
@@ -179,11 +174,21 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                                 ),
                                 const SizedBox(height: 12),
                                 _buildLanguageOptionItem(
-                                  title: 'Tiếng Anh',
+                                  title: 'english',
                                   isSelected: selectedLanguage == 'en',
                                   onTap: () {
                                     setModalState(() {
                                       selectedLanguage = 'en';
+                                    });
+                                  },
+                                ),
+                                const SizedBox(height: 12),
+                                _buildLanguageOptionItem(
+                                  title: 'chinese',
+                                  isSelected: selectedLanguage == 'zh',
+                                  onTap: () {
+                                    setModalState(() {
+                                      selectedLanguage = 'zh';
                                     });
                                   },
                                 ),
@@ -196,18 +201,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                         if (context.mounted) {
                           Navigator.pop(context);
                         }
-                        try {
-                          await _changeLanguage(selectedLanguage);
-                        } catch (_) {
-                          if (context.mounted) {
-                            ToastUtils.show(
-                              context: context,
-                              status: ToastStatus.error,
-                              title: 'Không thể tải ngôn ngữ tiếng Anh',
-                              subtitle: 'Hãy kiểm tra kết nối mạng và thử lại.',
-                            );
-                          }
-                        }
+                        await _changeLanguage(selectedLanguage);
                       },
                     );
                   },
@@ -255,16 +249,14 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            MlKitText(
-                              'Chia sẽ với mình trải nghiệm của bạn nhé',
+                            AppText('app_text_019',
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.blackColor,
                               ),
                             ),
-                            MlKitText(
-                              'Giúp mình chọn bệnh viện để lắng nghe ý kiến từ bạn',
+                            AppText('app_text_045',
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
@@ -283,8 +275,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                                       context: context,
                                       title:
                                           'Bạn có hài lòng về dịch vụ của Bệnh viện Hoàn Mỹ Sài Gòn?',
-                                      child: MlKitText(
-                                        'Đánh giá của bạn giúp chúng tôi cải thiện dịch vụ tốt hơn',
+                                      child: AppText('your_feedback_helps_us_improve_our_service',
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: AppColors.blackColor,
@@ -405,8 +396,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                                       ),
                                       borderRadius: BorderRadius.circular(12),
                                     ),
-                                    child: MlKitText(
-                                      'Bệnh viện Hoàn Mỹ Sài Gòn',
+                                    child: AppText('hoan_my_saigon_hospital',
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
@@ -462,7 +452,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
   }
 
   Widget _menuText(String text) {
-    return MlKitText(
+    return AppText(
       text,
       languageCode: _languageCode,
       style: TextStyle(fontSize: 14, color: AppColors.blackColor),
@@ -489,7 +479,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            MlKitText(
+            AppText(
               title,
               languageCode: _languageCode,
               style: TextStyle(

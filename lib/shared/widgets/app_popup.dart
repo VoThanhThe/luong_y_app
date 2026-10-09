@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_colors.dart';
-import 'mlkit_text.dart';
+import 'app_text.dart';
 
 class AppPopup {
   static void showRatingDialog({
@@ -44,7 +44,7 @@ class AppPopup {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                        child: MlKitText(
+                        child: AppText(
                           title,
                           style: TextStyle(
                             color: AppColors.whiteColor,
@@ -99,8 +99,9 @@ class AppPopup {
                                 ),
                               ),
                               onPressed: onNegativePressed,
-                              child: MlKitText(
-                                textNegativePressed.toUpperCase(),
+                              child: AppText(
+                                textNegativePressed,
+                                uppercase: true,
                                 style: TextStyle(
                                   color: AppColors.primaryColor,
                                   fontSize: 12,
@@ -122,8 +123,9 @@ class AppPopup {
                                 ),
                               ),
                               onPressed: onPositivePressed,
-                              child: MlKitText(
-                                textPositivePressed.toUpperCase(),
+                              child: AppText(
+                                textPositivePressed,
+                                uppercase: true,
                                 style: TextStyle(
                                   color: AppColors.whiteColor,
                                   fontSize: 12,

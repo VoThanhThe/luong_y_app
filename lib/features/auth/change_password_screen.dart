@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../shared/widgets/app_scaffold.dart';
 import '../../shared/widgets/custom_text_field.dart';
-import '../../shared/widgets/mlkit_text.dart';
+import '../../shared/widgets/app_text.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -73,8 +73,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                MlKitText(
-                  'Vui lòng nhập mật khẩu hiện tại và tạo mật khẩu mới an toàn hơn cho tài khoản của bạn.',
+                AppText('app_text_152',
                   style: TextStyle(
                     fontSize: 14,
                     color: AppColors.grayColor,
@@ -165,8 +164,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const MlKitText(
-                      'Yêu cầu độ mạnh mật khẩu mới:',
+                    const AppText('app_text_166',
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -211,8 +209,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         Navigator.pop(context);
                       }
                     },
-                    child: const MlKitText(
-                      'CẬP NHẬT MẬT KHẨU',
+                    child: const AppText('update_password',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -241,7 +238,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             color: isMet ? AppColors.primaryColor : Colors.grey,
           ),
           const SizedBox(width: 8),
-          MlKitText(
+          AppText(
             text,
             style: TextStyle(
               fontSize: 12,

@@ -9,6 +9,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/constants/app_colors.dart';
 import 'core/lang/app_language.dart';
 import 'core/lang/language_helper.dart';
+import 'core/lang/translation_service.dart';
 import 'features/navigation/main_navigation.dart';
 import 'features/onboarding/onboarding_screen.dart';
 
@@ -55,6 +56,9 @@ class _MyAppState extends State<MyApp> {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Lương Y',
+          translations: TranslationService(),
+          locale: LanguageHelper.localeForCode(AppLanguage.code.value),
+          fallbackLocale: TranslationService.fallbackLocaleVi,
           theme: ThemeData(
             fontFamily: 'Itim',
             scaffoldBackgroundColor: AppColors.grayLightColor,

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_gradients.dart';
 import '../../core/constants/app_icons.dart';
-import '../../core/lang/app_language.dart';
-import '../../core/lang/on_device_translation_service.dart';
+import 'package:get/get.dart';
 import '../../shared/widgets/f_core_image.dart';
 import '../appointment/appointment_screen.dart';
 import '../home/home_screen.dart';
@@ -22,14 +21,6 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   // 1. Khai báo chỉ số tab đang chọn (Mặc định là 2: Trang chủ)
   int _selectedIndex = 2;
-  final Map<String, String> _translatedLabels = {};
-  static const _labels = [
-    'Hồ sơ',
-    'Thông báo',
-    'Trang chủ',
-    'Lịch hẹn',
-    'Tiện ích',
-  ];
 
   // 2. Danh sách các màn hình tương ứng với từng tab trên thanh navigation
   final List<Widget> _screens = [
@@ -40,40 +31,7 @@ class _MainNavigationState extends State<MainNavigation> {
     const UtilitiesScreen(), // Tab 4: Tiện ích
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    AppLanguage.code.addListener(_updateLabels);
-    _updateLabels();
-  }
-
-  @override
-  void dispose() {
-    AppLanguage.code.removeListener(_updateLabels);
-    super.dispose();
-  }
-
-  void _updateLabels() {
-    if (AppLanguage.code.value != 'en') {
-      setState(_translatedLabels.clear);
-      return;
-    }
-
-    _translatedLabels.clear();
-    for (final label in _labels) {
-      OnDeviceTranslationService.translateVietnameseToEnglish(label)
-          .then((value) {
-            if (mounted && AppLanguage.code.value == 'en') {
-              setState(() => _translatedLabels[label] = value);
-            }
-          })
-          .catchError((_) {});
-    }
-    setState(() {});
-  }
-
-  String _label(String vietnamese) =>
-      _translatedLabels[vietnamese] ?? vietnamese;
+  String _label(String key) => key.tr;
 
   @override
   Widget build(BuildContext context) {
@@ -97,11 +55,11 @@ class _MainNavigationState extends State<MainNavigation> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.folder_shared),
-            label: _label('Hồ sơ'),
+            label: _label('profile'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
-            label: _label('Thông báo'),
+            label: _label('notifications'),
           ),
           BottomNavigationBarItem(
             icon: Container(
@@ -116,15 +74,15 @@ class _MainNavigationState extends State<MainNavigation> {
               ),
               child: FCoreImage(AppIcons.icLogo, width: 28, height: 28),
             ),
-            label: _label('Trang chủ'),
+            label: _label('home'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.today),
-            label: _label('Lịch hẹn'),
+            label: _label('appointments'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.pending),
-            label: _label('Tiện ích'),
+            label: _label('utilities'),
           ),
         ],
       ),

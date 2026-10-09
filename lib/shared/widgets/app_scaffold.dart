@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_gradients.dart';
-import 'mlkit_text.dart';
+import 'app_text.dart';
 
 class AppScaffold extends StatefulWidget {
   final String title;
@@ -74,7 +74,7 @@ class _AppScaffoldState extends State<AppScaffold> {
                               height: 50,
                             ), // Placeholder để giữ khoảng cách khi không có nút back
                       widget.titleWidget ??
-                          MlKitText(
+                          AppText(
                             widget.title,
                             style: const TextStyle(
                               color: Colors.white,

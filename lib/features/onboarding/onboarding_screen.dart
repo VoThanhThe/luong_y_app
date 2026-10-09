@@ -6,7 +6,7 @@ import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_gradients.dart';
 import '../../core/constants/app_images.dart';
 import '../../core/lang/language_helper.dart';
-import '../../shared/widgets/mlkit_text.dart';
+import '../../shared/widgets/app_text.dart';
 import '../navigation/main_navigation.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -49,9 +49,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
         ),
         child: SafeArea(
-          child: SizedBox(
+          child: Container(
             width: double.infinity,
             height: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
                 Expanded(
@@ -68,8 +69,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(height: 12),
-                      MlKitText(
-                        'Chăm sóc sức khoẻ\ntrong tầm tay.',
+                      AppText('healthcare_at_your_fingertips',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 26,
@@ -79,8 +79,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ),
                       const SizedBox(height: 12),
-                      MlKitText(
-                        'Kết nối chăm sóc sức khoẻ mọi lúc, mọi nơi.',
+                      AppText('connect_to_care_anytime_anywhere',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 15,
@@ -106,8 +105,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                     color: AppColors.primaryColor,
                                   ),
                                 )
-                              : MlKitText(
-                                  'Bắt đầu',
+                              : AppText('get_started',
                                   style: TextStyle(
                                     color: AppColors.primaryColor,
                                     fontSize: 16,
@@ -116,6 +114,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ),
                         ),
                       ),
+                      const SizedBox(height: 16),
                     ],
                   ),
                 ),

@@ -5,7 +5,7 @@ import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_images.dart';
 import '../../shared/widgets/app_scaffold.dart';
 import '../../shared/widgets/f_core_image.dart';
-import '../../shared/widgets/mlkit_text.dart';
+import '../../shared/widgets/app_text.dart';
 import 'forgot_password_screen.dart';
 import 'register_screen.dart';
 
@@ -57,8 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 FCoreImage(AppImages.imgMedicine, height: 200,),
                 const SizedBox(height: 10),
-                MlKitText(
-                  'Chào mừng bạn quay trở lại!',
+                AppText('welcome_back',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -66,8 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 6),
-                MlKitText(
-                  'Đăng nhập để quản lý lịch khám và sức khỏe của bạn',
+                AppText('sign_in_to_manage_your_appointments_and',
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey,
@@ -145,8 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
                           }
                         : null,
-                    child: const MlKitText(
-                      'ĐĂNG NHẬP',
+                    child: const AppText('sign_in',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -163,8 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
                     );
                   },
-                  child: MlKitText(
-                    'Quên mật khẩu',
+                  child: AppText('forgot_password',
                     style: TextStyle(
                       fontSize: 14,
                       color: AppColors.primaryColor,
@@ -181,8 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       MaterialPageRoute(builder: (context) => RegisterScreen()),
                     );
                   },
-                  child: MlKitText(
-                    'Đăng ký',
+                  child: AppText('sign_up',
                     style: TextStyle(
                       fontSize: 16,
                       color: AppColors.blackColor,

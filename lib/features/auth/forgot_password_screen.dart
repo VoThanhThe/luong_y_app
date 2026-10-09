@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../shared/widgets/app_scaffold.dart';
 import '../../shared/widgets/custom_text_field.dart';
-import '../../shared/widgets/mlkit_text.dart';
+import '../../shared/widgets/app_text.dart';
 import 'verify_otp_screen.dart'; // Import màn hình OTP tiếp theo
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -43,8 +43,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                MlKitText(
-                  'Vui lòng nhập số điện thoại đã đăng ký tài khoản của bạn để nhận mã xác thực khôi phục mật khẩu.',
+                AppText('app_text_155',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 14, color: AppColors.grayColor),
                 ),
@@ -92,8 +91,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         );
                       }
                     },
-                    child: const MlKitText(
-                      'TIẾP TỤC',
+                    child: const AppText('continue',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

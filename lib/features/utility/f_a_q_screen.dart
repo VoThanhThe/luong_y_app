@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../shared/widgets/app_scaffold.dart';
-import '../../shared/widgets/mlkit_text.dart';
+import '../../shared/widgets/app_text.dart';
 
 class FAQScreen extends StatefulWidget {
   const FAQScreen({super.key});
@@ -120,7 +120,7 @@ class _FAQScreenState extends State<FAQScreen> {
         initiallyExpanded: true, // <--- Mặc định mở (xổ ra) hết
         shape: const Border(), // <--- Xóa đường border khi mở
         collapsedShape: const Border(), // <--- Xóa đường border khi thu gọn
-        title: MlKitText(
+        title: AppText(
           title,
           style: TextStyle(
             fontSize: 15,
@@ -142,7 +142,7 @@ class _FAQScreenState extends State<FAQScreen> {
                   endIndent: 16,
                 ),
               ListTile(
-                title: MlKitText(
+                title: AppText(
                   questions[index],
                   style: const TextStyle(fontSize: 13.5, color: Colors.black87),
                 ),

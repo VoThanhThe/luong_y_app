@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/utils/toast_enums.dart';
-import 'mlkit_text.dart';
+import 'app_text.dart';
 
 class AppToastWidget extends StatefulWidget {
   final ToastStatus status;
@@ -116,7 +116,7 @@ class _AppToastWidgetState extends State<AppToastWidget>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                MlKitText(
+                                AppText(
                                   widget.title,
                                   style: const TextStyle(
                                     color: Colors.white,
@@ -127,7 +127,7 @@ class _AppToastWidgetState extends State<AppToastWidget>
                                 if (widget.subtitle != null &&
                                     widget.subtitle!.isNotEmpty) ...[
                                   const SizedBox(height: 2),
-                                  MlKitText(
+                                  AppText(
                                     widget.subtitle!,
                                     style: TextStyle(
                                       color: Colors.white.withAlpha(

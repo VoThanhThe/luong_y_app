@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/constants/app_colors.dart' show AppColors;
 import '../../core/constants/app_gradients.dart';
-import '../../shared/widgets/mlkit_text.dart';
+import '../../shared/widgets/app_text.dart';
 import '../../core/constants/app_images.dart';
 import '../../shared/widgets/f_core_image.dart';
 
@@ -46,16 +46,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(width: 12),
                     Column(
                       children: [
-                        MlKitText(
-                          'Chào buổi sáng',
+                        AppText('good_morning',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        MlKitText(
-                          'Võ Thành Thế'.toUpperCase(),
+                        AppText('profile_name',
+                          uppercase: true,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -124,8 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        MlKitText(
-                          'Mạng lưới',
+                        AppText('network',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -134,8 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         TextButton(
                           onPressed: () {},
-                          child: MlKitText(
-                            'Xem thêm',
+                          child: AppText('see_more',
                             style: TextStyle(
                               color: AppColors.primaryDarkColor,
                               fontWeight: FontWeight.w600,
@@ -161,8 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        MlKitText(
-                          'Tin tức & Truyền thông',
+                        AppText('news_media',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -171,8 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         TextButton(
                           onPressed: () {},
-                          child: MlKitText(
-                            'Xem thêm',
+                          child: AppText('see_more',
                             style: TextStyle(
                               color: AppColors.primaryDarkColor,
                               fontWeight: FontWeight.w600,
@@ -202,8 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    MlKitText(
-                      'Kết nối với chúng tôi',
+                    AppText('connect_with_us',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -272,7 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Icon(icon, color: Colors.white, size: 28),
         ),
         const SizedBox(height: 6),
-        MlKitText(
+        AppText(
           title,
           textAlign: TextAlign.center,
           maxLines: 2,
@@ -297,7 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           FCoreImage(image, width: 48, height: 48),
           const SizedBox(height: 6),
-          MlKitText(
+          AppText(
             title,
             textAlign: TextAlign.center,
             maxLines: 2,
@@ -334,8 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                MlKitText(
-                  'Đặt lịch kiểm tra\nsức khỏe',
+                AppText('schedule_a_health_checkup',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -357,8 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       vertical: 8,
                     ),
                   ),
-                  child: MlKitText(
-                    'ĐẶT HẸN KHÁM',
+                  child: AppText('book_an_appointment',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
                   ),
                 ),
@@ -425,8 +417,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                MlKitText(
-                  'Bệnh viện Hoàn Mỹ Sài Gòn',
+                AppText('hoan_my_saigon_hospital',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -440,8 +431,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Icon(Icons.location_on, size: 16, color: Colors.grey),
                     SizedBox(width: 4),
                     Expanded(
-                      child: MlKitText(
-                        '60-60A Phan Xích Long, Phường Cầu Kiệu, Hồ Chí Minh.',
+                      child: AppText('6060aPhanXichLongPhuongCauKieuHoChiMinh',
                         style: TextStyle(fontSize: 12, color: Colors.grey),
                       ),
                     ),
@@ -452,8 +442,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Icon(Icons.phone, size: 16, color: Colors.grey),
                     SizedBox(width: 4),
-                    MlKitText(
-                      '028 3990 2468',
+                    AppText('02839902468',
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ],
@@ -493,8 +482,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                MlKitText(
-                  'Cộng đồng',
+                AppText('community',
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
@@ -502,8 +490,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 4),
-                MlKitText(
-                  'Bụng to bất thường do nhiều khối u lớn trong ổ bụng',
+                AppText('app_text_011',
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -523,8 +510,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(width: 4),
                     Expanded(
-                      child: MlKitText(
-                        '21/10/2025',
+                      child: AppText('21102025',
                         style: TextStyle(
                           fontSize: 12,
                           color: AppColors.blackColor,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../shared/widgets/mlkit_text.dart';
+import '../../shared/widgets/app_text.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -68,8 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            MlKitText(
-                              'Võ Thành Thế',
+                            AppText('profile_name',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -77,8 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                             SizedBox(height: 4),
-                            MlKitText(
-                              'Bệnh nhân • 0912 345 678',
+                            AppText('patient_name_and_phone',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.grey,
@@ -180,8 +178,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const SizedBox(width: 48), // Cân bằng không gian
-                        MlKitText(
-                          'Hồ sơ cá nhân',
+                        AppText('personal_profile',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
@@ -214,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       alignment: Alignment.centerLeft,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-        child: MlKitText(
+        child: AppText(
           title,
           style: const TextStyle(
             fontSize: 15,
@@ -234,7 +231,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }) {
     return ListTile(
       leading: Icon(icon, color: isRed ? Colors.red : const Color(0xFF00796B)),
-      title: MlKitText(
+      title: AppText(
         title,
         style: TextStyle(
           fontSize: 14,

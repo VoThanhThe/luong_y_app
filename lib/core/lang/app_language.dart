@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 
 import 'language_helper.dart';
+import 'package:get/get.dart';
 
-/// Global language state used by the on-device ML Kit translation widgets.
+/// Global language state for the selected application locale.
 class AppLanguage {
   AppLanguage._();
 
@@ -15,5 +16,6 @@ class AppLanguage {
   static Future<void> change(String languageCode) async {
     await LanguageHelper.saveLanguageCode(languageCode);
     code.value = languageCode;
+    Get.updateLocale(LanguageHelper.localeForCode(languageCode));
   }
 }

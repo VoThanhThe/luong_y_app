@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../shared/widgets/app_scaffold.dart';
 import '../../shared/widgets/custom_text_field.dart';
-import '../../shared/widgets/mlkit_text.dart';
+import '../../shared/widgets/app_text.dart';
 import 'reset_password_screen.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
@@ -86,12 +86,11 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const MlKitText(
-                          'Tin nhắn mới từ Tổng đài',
+                        const AppText('app_text_132',
                           style: TextStyle(color: Colors.white70, fontSize: 11),
                         ),
                         const SizedBox(height: 2),
-                        MlKitText(
+                        AppText(
                           message,
                           style: const TextStyle(
                             color: Colors.white,
@@ -116,8 +115,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       minimumSize: Size.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
-                    child: MlKitText(
-                      'Điền nhanh',
+                    child: AppText('quick_fill',
                       style: TextStyle(
                         color: AppColors.primaryColor,
                         fontWeight: FontWeight.bold,
@@ -185,8 +183,8 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                MlKitText(
-                  'Mã xác thực (OTP) đã được gửi qua tin nhắn SMS đến số điện thoại\n${widget.phoneNumber}',
+                AppText('otp_sent_to_phone_number',
+                  parameters: {'phoneNumber': widget.phoneNumber},
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 14, color: AppColors.grayColor),
                 ),
@@ -221,8 +219,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const MlKitText(
-                      'Không nhận được mã? ',
+                    const AppText('app_text_080',
                       style: TextStyle(color: Colors.grey),
                     ),
                     GestureDetector(
@@ -230,8 +227,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         // Tạo lại mã mới và hiển thị lại Toast
                         _sendNewOtpAndShowToast();
                       },
-                      child: MlKitText(
-                        'Gửi lại',
+                      child: AppText('resend',
                         style: TextStyle(
                           color: AppColors.primaryColor,
                           fontWeight: FontWeight.bold,
@@ -253,8 +249,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       ),
                     ),
                     onPressed: _verifyAndNavigate,
-                    child: const MlKitText(
-                      'XÁC THỰC',
+                    child: const AppText('verify',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

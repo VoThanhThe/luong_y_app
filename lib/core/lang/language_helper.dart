@@ -20,6 +20,8 @@ class LanguageHelper {
     switch (code) {
       case 'en':
         return const Locale('en', 'US');
+      case 'zh':
+        return const Locale('zh', 'CN');
       case 'vi':
       default:
         return const Locale('vi', 'VN');
