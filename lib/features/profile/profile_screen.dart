@@ -1,250 +1,204 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../core/constants/app_colors.dart';
 import '../../shared/widgets/app_text.dart';
+import 'providers/profile_provider.dart';
+import 'widgets/profile_header.dart';
+import 'widgets/profile_menu_item.dart';
+import 'widgets/profile_custom_app_bar.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  bool _showCustomAppBar = false;
-  final double _scrollThreshold = 80.0;
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
-      body: NotificationListener<ScrollNotification>(
-        onNotification: (ScrollNotification scrollInfo) {
-          if (scrollInfo.metrics.axis == Axis.vertical) {
-            if (scrollInfo.metrics.pixels > _scrollThreshold &&
-                !_showCustomAppBar) {
-              setState(() {
-                _showCustomAppBar = true;
-              });
-            } else if (scrollInfo.metrics.pixels <= _scrollThreshold &&
-                _showCustomAppBar) {
-              setState(() {
-                _showCustomAppBar = false;
-              });
-            }
-          }
-          return false;
-        },
-        child: Stack(
-          children: [
-            // Nội dung chính của Profile cuộn ở dưới
-            SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(16, 20, 16, 40),
-              child: Column(
+    return ChangeNotifierProvider(
+      create: (_) => ProfileProvider(),
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF8F9FA),
+        body: Consumer<ProfileProvider>(
+          builder: (context, viewModel, child) {
+            return NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scrollInfo) {
+                viewModel.handleScroll(scrollInfo);
+                return false;
+              },
+              child: Stack(
                 children: [
-                  const SizedBox(height: 40), // Khoảng trống cho phần đầu
-                  // Header Profile (Avatar + Họ tên)
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withAlpha((0.05 * 255).toInt()),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Row(
+                  // Nội dung cuộn
+                  SingleChildScrollView(
+                    child: Column(
                       children: [
-                        const CircleAvatar(
-                          radius: 32,
-                          backgroundImage: NetworkImage(
-                            'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
+                        const ProfileHeader(),
+
+                        // Menu Thông tin
+                        Container(
+                          color: AppColors.whiteColor,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                                child: AppText(
+                                  'Thông tin',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: AppColors.blackColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              ProfileMenuItem(
+                                icon: Icons.account_circle_outlined,
+                                title: 'Thông tin tài khoản',
+                                onTap: viewModel.onAccountInfoTap,
+                              ),
+                              ProfileMenuItem(
+                                icon: Icons.monitor_heart_outlined,
+                                title: 'Chỉ số sức khoẻ',
+                                onTap: viewModel.onHealthMetricsTap,
+                              ),
+                              ProfileMenuItem(
+                                icon: Icons.assignment_outlined,
+                                title: 'Hồ sơ khám chữa bệnh',
+                                onTap: viewModel.onMedicalRecordsTap,
+                              ),
+                              ProfileMenuItem(
+                                icon: Icons.description_outlined,
+                                title: 'Khám sức khoẻ định kỳ',
+                                onTap: viewModel.onPeriodicHealthCheckTap,
+                              ),
+                              ProfileMenuItem(
+                                icon: Icons.medical_services_outlined,
+                                title: 'Kết quả XN & CLS',
+                                onTap: viewModel.onLabResultsTap,
+                              ),
+                              ProfileMenuItem(
+                                icon: Icons.topic_outlined,
+                                title: 'Hồ sở giấy tờ ra viện',
+                                onTap: viewModel.onDischargePapersTap,
+                              ),
+                              ProfileMenuItem(
+                                icon: Icons.calendar_today_outlined,
+                                title: 'Quản lý chia sẻ hồ sơ',
+                                onTap: viewModel.onShareManagementTap,
+                              ),
+                              ProfileMenuItem(
+                                icon: Icons.upload_file_outlined,
+                                title: 'Tài liệu tải lên',
+                                onTap: viewModel.onUploadedFilesTap,
+                              ),
+                              ProfileMenuItem(
+                                icon: Icons.pending_actions_outlined,
+                                title: 'Hàng đợi khám bệnh',
+                                onTap: viewModel.onQueueTap,
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(width: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppText('profile_name',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
+                        const SizedBox(height: 8),
+
+                        // Lịch sử đã đặt gần đây
+                        Container(
+                          width: double.infinity,
+                          color: AppColors.whiteColor,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                                child: AppText(
+                                  'Lịch sử đã đặt gần đây',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: AppColors.blackColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 4),
-                            AppText('patient_name_and_phone',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey,
+                              Center(
+                                child: AppText(
+                                  'Chưa có lịch sử đặt hẹn',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: AppColors.grayDarkColor,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
+                        const SizedBox(height: 8),
+
+                        // Hồ sơ người thân
+                        Container(
+                          width: double.infinity,
+                          color: AppColors.whiteColor,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                                child: AppText(
+                                  'Hồ sơ người thân',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: AppColors.blackColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Center(
+                                child: CupertinoButton(
+                                  onPressed: viewModel.onAddRelativeProfile,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primaryDarkColor,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      'Thêm hồ sơ'.toUpperCase(),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: AppColors.whiteColor,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 1.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 100),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
 
-                  // Danh sách các mục quản lý hồ sơ
-                  _buildSectionTitle('Quản lý y tế'),
-                  _buildProfileMenuItem(
-                    Icons.medical_services_outlined,
-                    'Hồ sơ khám chữa bệnh',
-                    () {},
-                  ),
-                  _buildProfileMenuItem(
-                    Icons.monitor_heart_outlined,
-                    'Chỉ số sức khỏe',
-                    () {},
-                  ),
-                  _buildProfileMenuItem(
-                    Icons.description_outlined,
-                    'Kết quả XN & CLS',
-                    () {},
-                  ),
-                  _buildProfileMenuItem(
-                    Icons.calendar_today_outlined,
-                    'Lịch hẹn đã đặt gần đây',
-                    () {},
-                  ),
-
-                  const SizedBox(height: 16),
-                  _buildSectionTitle('Cài đặt & Tài khoản'),
-                  _buildProfileMenuItem(
-                    Icons.person_outline,
-                    'Thông tin tài khoản',
-                    () {},
-                  ),
-                  _buildProfileMenuItem(
-                    Icons.security_outlined,
-                    'Đăng nhập và bảo mật',
-                    () {},
-                  ),
-                  _buildProfileMenuItem(
-                    Icons.share_outlined,
-                    'Quản lý chia sẻ hồ sơ',
-                    () {},
-                  ),
-                  _buildProfileMenuItem(
-                    Icons.logout,
-                    'Đăng xuất',
-                    () {},
-                    isRed: true,
-                  ),
-
-                  const SizedBox(height: 200), // Khoảng trống cuối cùng
+                  // Custom AppBar phía trên
+                  ProfileCustomAppBar(show: viewModel.showCustomAppBar),
                 ],
               ),
-            ),
-
-            // Custom AppBar trượt từ trên xuống khi scroll > 50px
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              top: _showCustomAppBar ? 0 : -130,
-              left: 0,
-              right: 0,
-              child: Container(
-                width: double.infinity,
-                height: 110,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xFF00B4DB), Color(0xFF0083B0)],
-                  ),
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withAlpha((0.15 * 255).toInt()),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 50),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const SizedBox(width: 48), // Cân bằng không gian
-                        AppText('personal_profile',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.settings_outlined,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            // Xử lý nút setting ở appbar
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+            );
+          },
         ),
       ),
-    );
-  }
-
-  Widget _buildSectionTitle(String title) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-        child: AppText(
-          title,
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF00796B),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildProfileMenuItem(
-    IconData icon,
-    String title,
-    VoidCallback onTap, {
-    bool isRed = false,
-  }) {
-    return ListTile(
-      leading: Icon(icon, color: isRed ? Colors.red : const Color(0xFF00796B)),
-      title: AppText(
-        title,
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: isRed ? Colors.red : Colors.black87,
-        ),
-      ),
-      trailing: const Icon(
-        Icons.arrow_forward_ios,
-        size: 16,
-        color: Colors.grey,
-      ),
-      onTap: onTap,
     );
   }
 }

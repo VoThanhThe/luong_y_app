@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -10,8 +11,10 @@ import 'core/constants/app_colors.dart';
 import 'core/lang/app_language.dart';
 import 'core/lang/language_helper.dart';
 import 'core/lang/translation_service.dart';
+import 'features/home/providers/home_provider.dart';
 import 'features/navigation/main_navigation.dart';
 import 'features/onboarding/onboarding_screen.dart';
+import 'features/profile/providers/profile_provider.dart';
 
 void main() async {
   if (kReleaseMode) {
@@ -50,55 +53,65 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-      future: _getLoginStatus(),
-      builder: (context, loginSnapshot) {
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Lương Y',
-          translations: TranslationService(),
-          locale: LanguageHelper.localeForCode(AppLanguage.code.value),
-          fallbackLocale: TranslationService.fallbackLocaleVi,
-          theme: ThemeData(
-            fontFamily: 'Itim',
-            scaffoldBackgroundColor: AppColors.grayLightColor,
-            primarySwatch: Colors.blue,
-            textTheme: const TextTheme(bodyMedium: TextStyle(fontSize: 16)),
-            textSelectionTheme: TextSelectionThemeData(
-              selectionColor: AppColors.primaryColor.withValues(
-                alpha: 0.5,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<HomeProvider>(
+          create: (_) => HomeProvider(),
+        ),
+        ChangeNotifierProvider<ProfileProvider>(
+          create: (_) => ProfileProvider(),
+        ),
+      ],
+      child: FutureBuilder<bool>(
+        future: _getLoginStatus(),
+        builder: (context, loginSnapshot) {
+          return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Lương Y',
+            translations: TranslationService(),
+            locale: LanguageHelper.localeForCode(AppLanguage.code.value),
+            fallbackLocale: TranslationService.fallbackLocaleVi,
+            theme: ThemeData(
+              fontFamily: 'NotoSans',
+              scaffoldBackgroundColor: AppColors.grayLightColor,
+              primarySwatch: Colors.blue,
+              textTheme: const TextTheme(bodyMedium: TextStyle(fontSize: 16)),
+              textSelectionTheme: TextSelectionThemeData(
+                selectionColor: AppColors.primaryColor.withValues(
+                  alpha: 0.5,
+                ),
+                cursorColor: AppColors.primaryColor,
               ),
-              cursorColor: AppColors.primaryColor,
             ),
-          ),
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const [Locale('vi'), Locale('en'), Locale('zh')],
-          home: FutureBuilder<bool>(
-            future: LanguageHelper.isOnboardingCompleted(),
-            builder: (context, onboardingSnapshot) {
-              if (onboardingSnapshot.connectionState == ConnectionState.waiting) {
-                // Trong lúc chờ check dữ liệu, để màn hình trống trùng màu background
-                return const Scaffold(
-                  body: SizedBox.shrink(),
-                );
-              }
-
-              bool isCompleted = onboardingSnapshot.data ?? false;
-
-              // Đảo lại logic cho đúng: Chưa xong hiện Onboarding, xong rồi vào MainNavigation
-              if (!isCompleted) {
-                return const OnboardingScreen();
-              } else {
-                return const MainNavigation();
-              }
-            },
-          ),
-        );
-      },
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [Locale('vi'), Locale('en'), Locale('zh')],
+            home: FutureBuilder<bool>(
+              future: LanguageHelper.isOnboardingCompleted(),
+              builder: (context, onboardingSnapshot) {
+                if (onboardingSnapshot.connectionState == ConnectionState.waiting) {
+                  // Trong lúc chờ check dữ liệu, để màn hình trống trùng màu background
+                  return const Scaffold(
+                    body: SizedBox.shrink(),
+                  );
+                }
+      
+                bool isCompleted = onboardingSnapshot.data ?? false;
+      
+                // Đảo lại logic cho đúng: Chưa xong hiện Onboarding, xong rồi vào MainNavigation
+                if (!isCompleted) {
+                  return const OnboardingScreen();
+                } else {
+                  return const MainNavigation();
+                }
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 

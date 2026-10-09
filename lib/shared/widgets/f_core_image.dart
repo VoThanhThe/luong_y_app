@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -49,6 +50,8 @@ class FCoreImage extends StatelessWidget {
       return _buildErrorWidget();
     }
 
+    final resolvedAlignment = alignment.resolve(Directionality.of(context));
+
     // 🔴 TRƯỜNG HỢP 1: ẢNH MẠNG (NETWORK)
     if (_isNetwork) {
       if (_isSvg) {
@@ -64,18 +67,15 @@ class FCoreImage extends StatelessWidget {
           placeholderBuilder: (context) => _buildPlaceholder(),
         );
       }
-      return Image.network(
-        path,
+      return CachedNetworkImage(
+        imageUrl: path,
         width: width,
         height: height,
         fit: fit,
         color: color,
-        alignment: alignment,
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) return child;
-          return _buildPlaceholder();
-        },
-        errorBuilder: (context, error, stackTrace) => _buildErrorWidget(),
+        alignment: resolvedAlignment,
+        placeholder: (context, url) => _buildPlaceholder(),
+        errorWidget: (context, url, error) => _buildErrorWidget(),
       );
     }
 

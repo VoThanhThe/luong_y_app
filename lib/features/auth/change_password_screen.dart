@@ -161,35 +161,50 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 const SizedBox(height: 12),
 
                 // Khối hiển thị tiêu chí bảo mật mật khẩu mới thời gian thực
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const AppText('app_text_166',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black54,
-                        fontFamily: 'Itim',
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteColor,
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
                       ),
-                    ),
-                    const SizedBox(height: 6),
-                    _buildRequirementRow(
-                      'Độ dài từ 6 đến 19 ký tự',
-                      _hasLength,
-                    ),
-                    _buildRequirementRow(
-                      'Có chứa ít nhất 1 chữ hoa (A-Z)',
-                      _hasUpperCase,
-                    ),
-                    _buildRequirementRow(
-                      'Có chứa ít nhất 1 chữ thường (a-z)',
-                      _hasLowerCase,
-                    ),
-                    _buildRequirementRow(
-                      'Có chứa ít nhất 1 ký tự đặc biệt (!@#\$...)',
-                      _hasSpecialChar,
-                    ),
-                  ],
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const AppText('app_text_166',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black54,
+                          fontFamily: 'Itim',
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      _buildRequirementRow(
+                        'Độ dài từ 6 đến 19 ký tự',
+                        _hasLength,
+                      ),
+                      _buildRequirementRow(
+                        'Có chứa ít nhất 1 chữ hoa (A-Z)',
+                        _hasUpperCase,
+                      ),
+                      _buildRequirementRow(
+                        'Có chứa ít nhất 1 chữ thường (a-z)',
+                        _hasLowerCase,
+                      ),
+                      _buildRequirementRow(
+                        'Có chứa ít nhất 1 ký tự đặc biệt (!@#\$...)',
+                        _hasSpecialChar,
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 30),
 
