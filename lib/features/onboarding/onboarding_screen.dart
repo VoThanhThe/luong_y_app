@@ -7,7 +7,7 @@ import '../../core/constants/app_gradients.dart';
 import '../../core/constants/app_images.dart';
 import '../../core/lang/language_helper.dart';
 import '../../shared/widgets/app_text.dart';
-import '../navigation/main_navigation.dart';
+import '../auth/login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -30,7 +30,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     // Đợi frame hiện tại render xong hiệu ứng loading rồi mới chuyển trang
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 50), () {
-        Get.offAll(() => const MainNavigation());
+        Get.offAll(() => const LoginScreen());
       });
     });
   }
@@ -69,7 +69,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(height: 12),
-                      AppText('healthcare_at_your_fingertips',
+                      AppText(
+                        'healthcare_at_your_fingertips',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 26,
@@ -79,7 +80,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ),
                       const SizedBox(height: 12),
-                      AppText('connect_to_care_anytime_anywhere',
+                      AppText(
+                        'connect_to_care_anytime_anywhere',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 15,
@@ -105,7 +107,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                     color: AppColors.primaryColor,
                                   ),
                                 )
-                              : AppText('get_started',
+                              : AppText(
+                                  'get_started',
                                   style: TextStyle(
                                     color: AppColors.primaryColor,
                                     fontSize: 16,

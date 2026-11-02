@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:luong_y_app/shared/widgets/custom_text_field.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_images.dart';
@@ -8,6 +9,7 @@ import '../../shared/widgets/f_core_image.dart';
 import '../../shared/widgets/app_text.dart';
 import 'forgot_password_screen.dart';
 import 'register_screen.dart';
+import 'providers/auth_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -48,16 +50,17 @@ class _LoginScreenState extends State<LoginScreen> {
         title: 'Đăng nhập',
         isShowBackButton: true,
         backgroundColor: AppColors.grayLightColor,
-        body: Padding(
+        body: SingleChildScrollView(
           padding: const EdgeInsets.all(20.0),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                FCoreImage(AppImages.imgMedicine, height: 200,),
+                FCoreImage(AppImages.imgMedicine, height: 200),
                 const SizedBox(height: 10),
-                AppText('welcome_back',
+                AppText(
+                  'welcome_back',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -65,11 +68,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 6),
-                AppText('sign_in_to_manage_your_appointments_and',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
+                AppText(
+                  'sign_in_to_manage_your_appointments_and',
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
                 const SizedBox(height: 24),
 
@@ -121,34 +122,61 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 30),
 
                 // Nút Đăng nhập
-                SizedBox(
-                  height: 48,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          (_phoneController.text.trim().isNotEmpty &&
-                              _passwordController.text.trim().isNotEmpty)
-                          ? AppColors.primaryColor
-                          : AppColors.grayColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                Consumer<AuthProvider>(
+                  builder: (context, auth, _) => SizedBox(
+                    height: 48,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            (_phoneController.text.trim().isNotEmpty &&
+                                _passwordController.text.trim().isNotEmpty)
+                            ? AppColors.primaryColor
+                            : AppColors.grayColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
-                    ),
-                    onPressed:
-                        (_phoneController.text.trim().isNotEmpty &&
-                            _passwordController.text.trim().isNotEmpty)
-                        ? () {
-                            if (_formKey.currentState!.validate()) {
-                              // Xử lý logic đăng nhập
+                      onPressed: auth.isLoading
+                          ? null
+                          : (_phoneController.text.trim().isNotEmpty &&
+                                _passwordController.text.trim().isNotEmpty)
+                          ? () async {
+                              if (_formKey.currentState!.validate()) {
+                                final success = await auth.onLogin(
+                                  username: _phoneController.text,
+                                  password: _passwordController.text,
+                                );
+                                if (!context.mounted) return;
+                                if (!success) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        auth.error ?? 'Đăng nhập thất bại',
+                                      ),
+                                      behavior: SnackBarBehavior.floating,
+                                    ),
+                                  );
+                                }
+                              }
                             }
-                          }
-                        : null,
-                    child: const AppText('sign_in',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                          : null,
+                      child: auth.isLoading
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : const AppText(
+                              'sign_in',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
                     ),
                   ),
                 ),
@@ -157,10 +185,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => ForgotPasswordScreen(),
+                      ),
                     );
                   },
-                  child: AppText('forgot_password',
+                  child: AppText(
+                    'forgot_password',
                     style: TextStyle(
                       fontSize: 14,
                       color: AppColors.primaryColor,
@@ -177,7 +208,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       MaterialPageRoute(builder: (context) => RegisterScreen()),
                     );
                   },
-                  child: AppText('sign_up',
+                  child: AppText(
+                    'sign_up',
                     style: TextStyle(
                       fontSize: 16,
                       color: AppColors.blackColor,
